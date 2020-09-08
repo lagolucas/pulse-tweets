@@ -44,3 +44,9 @@ def tweet_end_arroba(arroba, last_tweet):
     api = twitter_auth.autentica_tweets()
     api.update_status(in_reply_to_status_id = last_tweet.id, status = ("Fim da listagem de tweets recuperados para a arroba " + arroba[0]))
     # print(arroba[0])
+
+
+def start_thread(param):
+    api = twitter_auth.autentica_tweets()
+    status = api.update_status("aaa")
+    return status

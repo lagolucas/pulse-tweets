@@ -1,71 +1,42 @@
-import re, time
-import database_auth
+from peewee import *
+import json
 
-def get_handles_to_tweet():
-    sql = "select distinct(handle) from mimic_tweets where erased = 1 and 7c0_tweeted = 0;"
-    db = database_auth.conecta_banco()
-    cursor = db.cursor()
-    try:
-        cursor.execute(sql)
-        value = cursor.fetchall()
-    except Exception as E:
-        print(E)
-    finally:
-        db.close()
+with open("config.json") as jsonfile:
+    # `json.loads` parses a string in json format
+	db_config = json.load(jsonfile)['database']
 
-    return value
+database = PostgresqlDatabase(
+    'postgres', **{'host': db_config['host'], 'port': db_config['port'], 'user': db_config['user'], 'password': db_config['password']})
 
+class UnknownField(object):
+    def __init__(self, *_, **__): pass
 
-def get_tweets_ids(conta):
-    print(conta)
-    sql = "select idTweets from mimic_tweets where handle = \"" + conta[0] + "\" and 7c0_tweeted = 0 and erased = 1 order by idTweets asc;"
-    db = database_auth.conecta_banco()
-    cursor = db.cursor()
-    try:
-        cursor.execute(sql)
-        value = cursor.fetchall()
-    except Exception as E:
-        print(E)
-    finally:
-        db.close()
+class BaseModel(Model):
+    class Meta:
+        database = database
 
-    return value
+class TweetBotParams(BaseModel):
+    body_text = CharField()
+    description = CharField()
+    lang = CharField()
+    param_id = AutoField()
+    slug = CharField()
+    thread_begin = CharField()
+    thread_end = CharField()
 
-def retrieve_tweet(tweet_id):
-    sql = "select * from mimic_tweets where idTweets = \"" + str(tweet_id[0]) + "\";"
-    db = database_auth.conecta_banco()
-    cursor = db.cursor()
-    try:
-        cursor.execute(sql)
-        value = cursor.fetchone()
-    except Exception as E:
-        print(E)
-    finally:
-        db.close()
+    class Meta:
+        table_name = 'tweet_bot_params'
+        schema = 'public'
 
-    if value:
-        if value[10]:
-            return tweet_id, value[2], value[4], value[10], value[3]
-        else:
-            return tweet_id, value[2], value[4], "Não arquivado", value[3]
-    else:
-        return [0], "", "", "Não arquivado", ""
+class TweetBotQueue(BaseModel):
+    bot_flag = BooleanField(null=True)
+    created_at = DateTimeField()
+    param = ForeignKeyField(column_name='param_id', field='param_id', model=TweetBotParams)
+    queue_id = BigIntegerField()
+    status_id = BigIntegerField()
+    trend_type = IntegerField()
 
-def update_tweeted(id_set):
-    db = database_auth.conecta_banco()
-    cursor = db.cursor()
-
-    sql = "update mimic_tweets set 7c0_tweeted = 1 where idTweets in ("
-
-    for id in id_set:
-        sql += "\"" + str(id[0]) + "\","
-
-    sql += "\"0\");"
-
-    try:
-        cursor.execute(sql)
-    except Exception as E:
-        print(E)
-
-    db.commit()
-    db.close()
+    class Meta:
+        table_name = 'tweet_bot_queue'
+        schema = 'public'
+        primary_key = False

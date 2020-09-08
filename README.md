@@ -9,12 +9,16 @@
 
 ## Instalar os seguintes itens
 ### Com yum
+`sudo yum install python3`
+
+`sudo yum install python3-dev libpq-dev`
+
 
 ### Com pip3
+`pip3 install peewee`
 
+`pip3 install tweepy`
 
-## Alterar os arquivos *_gh
-
-### Copiar e renomear os arquivos removendo o "_gh"
+### copiar o arquivo config.json.default
 
 ### Preencher os itens comentados no arquivos
