@@ -3,48 +3,19 @@ if __name__ == '__main__':
     from database import TweetBotQueue
     import twitter
 
-    params = TweetBotParams.select().where(TweetBotParams.slug == 'start')   
-    for param in params:
-    # Para cada parâmetro de "start" do science pulse
-
-        # Iniciar o fio naquela lingua
-        # twitter.start_thread(param)
+    languages = ['pt']
+    
+    for language in languages:
+        first_tweet = TweetBotParams.select().where((TweetBotParams.slug == 'start') & (TweetBotParams.lang == language)).get()
+        previous_status = twitter.start_thread(first_tweet)
         
-        # Coletar todos os tweets para lista naquela lingua
-        tweets = TweetBotQueue.select(TweetBotQueue, TweetBotParams).join(TweetBotParams).where(TweetBotQueue.param.lang == param.lang)
-
-        for tweet in tweets:
-            print(tweet.status_id)
-
-        # Para cada tweet
-
-            # Coletar os parâmetros necessários para fazer o QuoteTweet
-
-            # Postar o Quote Tweet
-
-        # Encerrar a lista naquela lingua
-
-
-    # print("iniciando a coleta de arrobas para tuitar")
-    # arrobas = database.get_handles_to_tweet()
-
-    # print("Coletados " + str(len(arrobas)) + " arrobas para tuitar...")
-
-    # print("iniciando processo de tuites... ")
-    # twitter.tweet_start()
-
-    # qtde_tweets = 0
-    # for arroba in arrobas:
-    #     tweet_ids = database.get_tweets_ids(arroba)
-    #     last_tweet = twitter.tweet_start_arroba(arroba, len(tweet_ids))
-    #     for tweet_id in tweet_ids:
-    #         qtde_tweets += 1
-    #         id, tweet, handle, archive_url, creation_date = database.retrieve_tweet(tweet_id)
-    #         last_tweet = twitter.tweet(handle, tweet, archive_url, creation_date, id, last_tweet)
-    #         if not qtde_tweets%20:
-    #             time.sleep(3600)
         
-    #     database.update_tweeted(tweet_ids)
-    #     twitter.tweet_end_arroba(arroba, last_tweet)
+        status_list = TweetBotQueue.select(TweetBotQueue, TweetBotParams).join(TweetBotParams).where((TweetBotQueue.param.lang == language) & (TweetBotQueue.bot_flag == False))
 
-    # twitter.tweet_end(qtde_tweets)
+        for status in status_list:
+            previous_status = twitter.tweet(status, previous_status)
+            status.bot_flag = True
+            status.save()
+
+        last_tweet = TweetBotParams.select().where((TweetBotParams.slug == 'end') & (TweetBotParams.lang == language)).get()
+        twitter.end_thread(last_tweet, previous_status)

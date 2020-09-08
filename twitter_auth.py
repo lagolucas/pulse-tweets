@@ -1,10 +1,9 @@
 import tweepy
 import json
 
-def autentica_tweets():
+def authenticate():
 
     with open("config.json") as jsonfile:
-    # `json.loads` parses a string in json format
         tt_config = json.load(jsonfile)['twitter-api']
 
         auth = tweepy.OAuthHandler(tt_config['consumer_token'], tt_config['consumer_secret'])
