@@ -24,9 +24,7 @@ class TweetBotParams(BaseModel):
     lang = CharField()
     param_id = AutoField()
     slug = CharField()
-    thread_begin = CharField()
-    thread_end = CharField()
-
+    period_day = CharField()
     class Meta:
         table_name = 'tweet_bot_params'
         schema = 'public'
