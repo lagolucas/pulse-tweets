@@ -49,3 +49,9 @@ Para cada tipo de trend usada no bot, é necessário um parâmetro com o `body_t
 No horário programado o robo irá fazer um tweet de início de fio e em seguida varrer a tabela de fila buscando todos os tweets para montar o fio.
 
 Os tweets serão atualizados com `bot_flag = True` depois de ter realizado o tweet.
+
+
+
+## A aplicação precisa de um parâmetro para funcionar corretamente
+
+Para execução do script é necessário passar um parâmetro que será comparado a coluna `period_day` do banco de dados, atualmente os parâmetros no banco de dados são `night` ou `morning`, mas podem ser adicionados outros.
