@@ -18,6 +18,8 @@
 
 `pip3 install tweepy`
 
+`pip3 install psycopg2-binary`
+
 ## clonar o repositório na máquina
 
 ## Configurações
