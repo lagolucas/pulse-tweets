@@ -1,7 +1,7 @@
 # science-pulse-tweets
  Twitter bot for science pulse project
 
- Release 1.0.0
+ Release 1.1.0
 
  Para ser usado com chamadas em crontab
 
@@ -73,6 +73,9 @@ As opções para período do dia são  `night` e `morning`;
 Os crnjobs usados atualmente são os seguintes:
 
 `0 13 * * * nohup python3 science-pulse-tweets/tuitar.py pt morning > sci_out_pt_morn.log 2> sci_err_pt_morn.log &`
+
 `0 14 * * * nohup python3 science-pulse-tweets/tuitar.py en morning > sci_out_en_morn.log 2> sci_err_en_morn.log &`
+
 `0 23 * * * nohup python3 science-pulse-tweets/tuitar.py pt night > sci_out_pt_night.log 2> sci_err_pt_night.log &`
+
 `0 0 * * * nohup python3 science-pulse-tweets/tuitar.py en night > sci_out_en_night.log 2> sci_err_pt_night.log &`
