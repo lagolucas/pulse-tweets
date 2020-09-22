@@ -56,4 +56,10 @@ Os tweets serão atualizados com `bot_flag = True` depois de ter realizado o twe
 
 ## A aplicação precisa de um parâmetro para funcionar corretamente
 
-Para execução do script é necessário passar um parâmetro que será comparado a coluna `period_day` do banco de dados, atualmente os parâmetros no banco de dados são `night` ou `morning`, mas podem ser adicionados outros.
+Para execução do script é necessário passar dos parâmetros a língua e o período do dia.
+
+As opções para língua são `pt` e `en`;
+
+As opções para período do dia são  `night` e `morning`;
+
+Caso o sistem possua mais necessidades dentro desses dois parâmetros, é só adicionar ao banco de dados, mais itens na tabela TweetBotParams.
