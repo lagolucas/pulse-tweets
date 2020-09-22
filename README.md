@@ -1,7 +1,7 @@
 # science-pulse-tweets
  Twitter bot for science pulse project
 
- Release 1.1.0
+ Release 1.1.1
 
  Para ser usado com chamadas em crontab
 
