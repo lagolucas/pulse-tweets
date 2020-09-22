@@ -4,7 +4,7 @@ if __name__ == '__main__':
     import twitter
     import sys
 
-    languages = ['pt', 'en']
+    languages = [sys.argv[1]]
 
     for language in languages:
         first = True
@@ -12,7 +12,7 @@ if __name__ == '__main__':
 
         status_list = TweetBotQueue.select(TweetBotQueue, TweetBotParams).join(TweetBotParams).where(
             (TweetBotQueue.param.lang == language) 
-            & (TweetBotParams.period_day == sys.argv[1]) 
+            & (TweetBotParams.period_day == sys.argv[2]) 
             & (TweetBotQueue.bot_flag == False)).order_by(TweetBotQueue.trend_type.asc())
 
         for status in status_list:

@@ -62,12 +62,17 @@ Os tweets serão atualizados com `bot_flag = True` depois de ter realizado o twe
 
 ## A aplicação precisa de um parâmetro para funcionar corretamente
 
-Para execução do script é necessário passar um parâmetro que será comparado a coluna `period_day` do banco de dados, atualmente os parâmetros no banco de dados são `night` ou `morning`, mas funcionará se houverem outros períodos cadastrados na coluna específica.
+Para execução do script é necessário passar dos parâmetros a língua e o período do dia.
+
+As opções para língua são `pt` e `en`;
+
+As opções para período do dia são  `night` e `morning`;
 
 ### Configuração do cronjob
 
 Os crnjobs usados atualmente são os seguintes:
 
-`0 13 * * * nohup python3 science-pulse-tweets/tuitar.py morning > sci_out_morn.log 2> sci_err_morn.log &`
-
-`0 23 * * * nohup python3 science-pulse-tweets/tuitar.py night > sci_out_night.log 2> sci_err_night.log &`
+`0 13 * * * nohup python3 science-pulse-tweets/tuitar.py pt morning > sci_out_pt_morn.log 2> sci_err_pt_morn.log &`
+`0 14 * * * nohup python3 science-pulse-tweets/tuitar.py en morning > sci_out_en_morn.log 2> sci_err_en_morn.log &`
+`0 23 * * * nohup python3 science-pulse-tweets/tuitar.py pt night > sci_out_pt_night.log 2> sci_err_pt_night.log &`
+`0 0 * * * nohup python3 science-pulse-tweets/tuitar.py en night > sci_out_en_night.log 2> sci_err_pt_night.log &`
