@@ -27,3 +27,8 @@ def end_thread(param, previous_status):
 
 def get_url(handle, status_id):
     return "https://twitter.com/"+handle+"/status/"+str(status_id)
+
+def tweet_hashtags(param, hashtags):
+    api = twitter_auth.authenticate()
+    status = api.update_status(param.body_text.format(h=hashtags))
+    return status
