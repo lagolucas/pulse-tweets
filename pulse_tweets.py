@@ -21,7 +21,7 @@ if __name__ == '__main__':
             status.bot_flag = True
             status.save()
 
-        if (len(status_list) > 0):
-            last_tweet = TweetBotParams.select().where((TweetBotParams.slug == 'end') &
-                                                    (TweetBotParams.lang == language)).get()
-            twitter.end_thread(last_tweet, previous_status)
+        # if (len(status_list) > 0):
+        #     last_tweet = TweetBotParams.select().where((TweetBotParams.slug == 'end') &
+        #                                             (TweetBotParams.lang == language)).get()
+        #     twitter.end_thread(last_tweet, previous_status)
