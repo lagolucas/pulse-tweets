@@ -1,4 +1,4 @@
-# science-pulse-tweets
+# pulse-tweets
  Twitter bot for science pulse project
 
  Release 1.1.1
