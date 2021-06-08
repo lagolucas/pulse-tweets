@@ -20,7 +20,7 @@ class Base(BaseModel):
 
     class Meta:
         table_name = 'base'
-        schema = 'public'
+        schema = db_config['schema']
         primary_key = False
 
 class TweetBotParams(BaseModel):
@@ -33,7 +33,7 @@ class TweetBotParams(BaseModel):
 
     class Meta:
         table_name = 'tweet_bot_params'
-        schema = 'public'
+        schema = db_config['schema']
 
 class HashtagBotQueue(BaseModel):
     bot_flag = BooleanField(null=True)
@@ -45,7 +45,7 @@ class HashtagBotQueue(BaseModel):
 
     class Meta:
         table_name = 'hashtag_bot_queue'
-        schema = 'public'
+        schema = db_config['schema']
 
 class TweetBotQueue(BaseModel):
     bot_flag = BooleanField(null=True)
@@ -58,5 +58,5 @@ class TweetBotQueue(BaseModel):
 
     class Meta:
         table_name = 'tweet_bot_queue'
-        schema = 'public'
+        schema = db_config['schema']
 
